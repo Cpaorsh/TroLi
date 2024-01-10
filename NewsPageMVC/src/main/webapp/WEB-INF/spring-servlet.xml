@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc"  
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	
+	<context:annotation-config></context:annotation-config>
+	<context:component-scan base-package = "com.newspage"></context:component-scan>
+	
+	<mvc:annotation-driven/>
+	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
+		<property name="prefix" value="/WEB-INF/jsp/"></property>    
+		<property name="suffix" value=".jsp"></property>    
+	</bean> 
+	
+	<!-- File Upload Configuration Bean Details -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1000000000" />
+	</bean>
+	
+	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>    
+		<property name="url" value="jdbc:mysql://localhost:3306/newspage"></property>    
+		<property name="username" value="root"></property>    
+		<property name="password" value="cpaorsh"></property>    
+	</bean>    
+	    
+	<bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">    
+		<property name="dataSource" ref="ds"></property>    
+	</bean>    
+	    
+	<!--<bean id="userDao" class="com.newspage.dao.UserDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>-->
+	<bean id="docDao" class="com.newspage.dao.DocDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="drlDao" class="com.newspage.dao.DrlDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="ttcnDao" class="com.newspage.dao.TtcnDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="kltnDao" class="com.newspage.dao.KltnDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="dtttDao" class="com.newspage.dao.DtttDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="dtklDao" class="com.newspage.dao.DtklDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="hockiDao" class="com.newspage.dao.HockiDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="giangvienDao" class="com.newspage.dao.GiangvienDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="sinhvienDao" class="com.newspage.dao.SinhvienDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	<bean id="manageDao" class="com.newspage.dao.ManageDao">    
+		<property name="template" ref="jt"></property>    
+	</bean>
+	
+	<bean id="userService" class="com.newspage.service.UserServiceImpl" />
+  	<bean id="userDao" class="com.newspage.dao.UserDaoImpl" />
+  	
+  	<bean id="uploadService" class="com.newspage.iexcel.FileUploadService" autowire="byType"></bean>
+	<bean id="fileUploadDao" class="com.newspage.iexcel.FileUploadDao" autowire="byType"></bean>
+
+</beans>
